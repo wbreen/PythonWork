@@ -1,0 +1,6 @@
+This is just some random text that I want to put in a file so I can read it in my python
+code for testing.  There is really nothing special about what this text is, it is simply 
+here so I can try to read it using python.  Where is the fun in just randomly typing on a 
+keyboard? The only thing which might make this better is if I was typing on a mechanical 
+keyboard, but unfortunately, I do not own one, and therefore I cannot use one to type this
+out.
