@@ -25,7 +25,6 @@ def findFileName():
     
     if fileName[-4:] != correctEnd :
         fileName += ".txt"
-    
     #print(fileName)
     return fileName
         
@@ -44,16 +43,16 @@ def createDic(fileName):
             #made the list of words
             
     #now take the list of words, loop through them,
-    
-    for i in wordList:
-        print(i)
+    print(wordList)
+    for i in range(len(wordList)-2):
         #Need to get the word at the index i, and then you can do this more easily
-        key, value = wordList[i:i+1], wordList[i+2]
-        print(key)
-        print(value)
-        #twoWordDic[key]=value
+        key, value = wordList[i]+" "+wordList[i+1], wordList[i+2]
+        #print("Key = "+key, "Value = "+ value)
         
-    #print(wordList)
+        twoWordDic[key]=value
+        
+    print(twoWordDic)
+    return twoWordDic
             
     #Maybe go through the words 3 at a time, then create a new key in the dictionary each time  
 def addToDic(dictionary, word1, word2, word3):
