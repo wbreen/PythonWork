@@ -11,7 +11,9 @@ def main():
     #read in the file
     #Create a dictionary based on the file (two words are the key, and the next word is the value)
     #The dictionary values should be a list
-    dictionary = createDic(file)
+    wordList = createList(file)
+    dictionary = createDic(wordList)
+    createNewText(wordList, dictionary)
     
     #take the first two words from the file and print them
     #use the preceding two words to be the lookup values for the next word to use
@@ -25,14 +27,11 @@ def findFileName():
     
     if fileName[-4:] != correctEnd :
         fileName += ".txt"
-    #print(fileName)
     return fileName
-        
-#findFileName()
 
-#Given the filename, use that to create a dictionary of 2 words, 1 word
-def createDic(fileName):
-    twoWordDic = {}
+
+#Given the filename, use that to create a list of the words in the file of 2 words, 1 word
+def createList(fileName):
     myFile = open(fileName,'r')
     wordList = []
     
@@ -42,21 +41,74 @@ def createDic(fileName):
             wordList.append(word)
             #made the list of words
             
-    #now take the list of words, loop through them,
-    print(wordList)
+    #print(wordList)
+    return wordList
+   
+#given the list of words from the file, create a dictionary from them
+def createDic(wordList):
+    twoWordDic = {}
     for i in range(len(wordList)-2):
         #Need to get the word at the index i, and then you can do this more easily
         key, value = wordList[i]+" "+wordList[i+1], wordList[i+2]
         #print("Key = "+key, "Value = "+ value)
         
         twoWordDic[key]=value
-        
-    print(twoWordDic)
+    
+    #print(twoWordDic)
     return twoWordDic
-            
-    #Maybe go through the words 3 at a time, then create a new key in the dictionary each time  
-def addToDic(dictionary, word1, word2, word3):
-    dictionary[word1+" "+word2]=word3
 
-       
+#Method creates the new 500 words that sound like the old text
+def createNewText(words, dictionary):
+    #start with the first two words of the old text
+    finalText = ""
+    finalTextList = []
+    finalTextList.append(words[0])
+    finalTextList.append(words[1])
+    
+    for i in range(150):
+        key = finalTextList[-2]+" " +finalTextList[-1]
+        #print (key,"this is the key")
+        nextWord = dictionary.get(key)
+        #print(nextWord)
+        finalTextList.append(nextWord)
+    finalText = ' '.join(finalTextList)
+    print(finalText)
+
+    
+
 main()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
