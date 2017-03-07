@@ -43,7 +43,7 @@ def createList(fileName):
             
     return wordList
    
-#given the list of words from the file, create a dictionary from them in the form of [(word, Times it appears)]
+#given the list of words from the file, create a dictionary from them
 def createDic(wordList):
     twoWordDic = {}
     for i in range(len(wordList)-2):
@@ -65,24 +65,38 @@ def createDic(wordList):
         else: 
             twoWordDic[key]=[value]
     
-    #take the dictionary that has been created, and now compresses them into just one dictionary in the correct form
+            
+            
+            
+            
     for key in twoWordDic:
         #for each key, get the value of the key
         #Read each value into its own list
         #go through the list, count the number of times the first element occurs, and append it into a new list
         #before adding to the new list, see if the new list contains the element you are trying to append
             #if it doesn't contain the element, append it, if it does contain the element, don't do anything
+        print("Before the compression:", key, ":", twoWordDic[key])
         myValues = twoWordDic[key]
         newList = []
+        print("These are my values : ", myValues)
         for value in myValues:
             numOfValues = myValues.count(value)
+            print("the number of values is ", numOfValues)
             newValue = value, numOfValues
             if newList.count(newValue) is 0:
                 newList.append(newValue)
             else:
                 newList = newList
-                
+        
+            
+        print("the final key should be :", newList)
         twoWordDic[key] = newList
+        print("After the compression:", key, ":", twoWordDic[key])
+        print("-----------------------")
+        print(" ")
+        
+#        print("After the compression:", key, ":", twoWordDic[key])
+#Now need to compress so there is only one representation of each word, with the number of times it appears as the second number
     
     print(twoWordDic)
     return twoWordDic
