@@ -7,22 +7,19 @@ Created on Tue Feb 28 14:48:38 2017
 """
 
 def main():
+    #read in file
     file = findFileName()
-    #read in the file
-    #Create a dictionary based on the file (two words are the key, and the next word is the value)
-    #The dictionary values should be a list
+    #Create list of words in the file
     wordList = createList(file)
+    #Create a dictonary from that list
     dictionary = createDic(wordList)
-    #createNewText(wordList, dictionary)
+    #Use the dictionary to create a new sounds-like text, and print it
+    createNewText(wordList, dictionary)
     
-    #take the first two words from the file and print them
-    #use the preceding two words to be the lookup values for the next word to use
-    #do this up until it has printed 500 words
-    #printNewText()
     
 #This method gets the file that the Dictionary will be based off of
 def findFileName():
-    fileName = input("Give me the name of the file you want to confound: ")
+    fileName = input("Give me the name of the file you want to imitate: ")
     correctEnd = ".txt"
     
     if fileName[-4:] != correctEnd :
@@ -43,15 +40,13 @@ def createList(fileName):
             
     return wordList
    
-#given the list of words from the file, create a dictionary from them in the form of [(word, Times it appears)]
+#given the list of words from the file, create a dictionary from them in the form of [(word, # times it appears)]
 def createDic(wordList):
     twoWordDic = {}
     for i in range(len(wordList)-2):
-        
         key = wordList[i]+" "+wordList[i+1]
         value = wordList[i+2]
-        #if the key already exists in the dictionary, compare the new value to the old values, if they match, then add 1 to the second part of the tuple
-        
+        #Creates a dictionary with just the key and the value of the word repeated over and over, will compress this in the second part of the method
         if key in twoWordDic:
             currentVals = twoWordDic.get(key)
             keyWordValues = []
@@ -83,13 +78,20 @@ def createDic(wordList):
                 newList = newList
                 
         twoWordDic[key] = newList
+    #sort the dictionary so the most frequently used words are first
+    sortDictionary(twoWordDic)
     
-    print(twoWordDic)
     return twoWordDic
 
-
-
-
+    
+#Sorts the dictionary based on the number of times a number has been used
+def sortDictionary(dictionary):
+    for key in dictionary:
+        valuesList = dictionary.get(key)
+        valuesList = sorted(valuesList, key=lambda v: (-1*v[1], v[0].lower()))
+        dictionary[key]=valuesList
+        
+    return dictionary
 
 
 #Method creates the new 500 words that sound like the old text
@@ -97,18 +99,39 @@ def createNewText(words, dictionary):
     #start with the first two words of the old text
     finalText = ""
     finalTextList = []
+    
     finalTextList.append(words[0])
     finalTextList.append(words[1])
+    space = " "
     
-    for i in range(150):
-        key = finalTextList[-2]+" " +finalTextList[-1]
-        #print (key,"this is the key")
-        nextWord = dictionary.get(key)
-        #print(nextWord)
-        finalTextList.append(nextWord)
+    for i in range(500):
+        key = space.join(finalTextList[-2:])
+        wordToAdd = retrieveFrequentUse(dictionary, key)
+        finalTextList.append(wordToAdd)
+        
+        valToRemove = dictionary.get(key)
+        removeIfMoreValues(dictionary, key, valToRemove[0])
+        
     finalText = ' '.join(finalTextList)
     print(finalText)
 
+        
+#This method will return the most frequently used word from the list in the dictionary
+def retrieveFrequentUse(dictionary, key):
+    myList = dictionary.get(key)
+    myList = sorted(myList,key=lambda m: (-1*m[1],m[0].lower()))
+    return myList[0][0]
+
+#Removes the value given from the dictionary at the key value if there are other possibilities for the key
+def removeIfMoreValues(dictionary, key, value):
+    listOfValues = dictionary.get(key)
+    #if there are more values in the list than just 1, then remove the first one (the value)
+    if len(listOfValues)>1:
+        listOfValues.remove(value)
+
+    dictionary[key]=listOfValues
+
+    
     
 
 main()
