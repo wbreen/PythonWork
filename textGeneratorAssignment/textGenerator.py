@@ -4,6 +4,7 @@
 Created on Tue Feb 28 14:48:38 2017
 
 @author: William Breen
+@copyright: William Breen 2017
 """
 
 def main():
@@ -119,7 +120,7 @@ def createNewText(words, dictionary):
 #This method will return the most frequently used word from the list in the dictionary
 def retrieveFrequentUse(dictionary, key):
     myList = dictionary.get(key)
-    myList = sorted(myList,key=lambda m: (-1*m[1],m[0].lower()))
+    myList = sorted(myList, key=lambda m: (-1*m[1],m[0].lower()))
     return myList[0][0]
 
 #Removes the value given from the dictionary at the key value if there are other possibilities for the key
@@ -128,7 +129,7 @@ def removeIfMoreValues(dictionary, key, value):
     #if there are more values in the list than just 1, then remove the first one (the value)
     if len(listOfValues)>1:
         listOfValues.remove(value)
-
+        
     dictionary[key]=listOfValues
 
     
