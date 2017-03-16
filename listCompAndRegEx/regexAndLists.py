@@ -11,8 +11,9 @@ def main():
     #To run listComps, uncomment it, it should print out the answer number then the answer
     #listComps()
     #Put the name of the file in the parameters of readFileToList, don't necessarily need '.txt' on end
-    myList = readToList("Military_Alphabet.txt")
-    print(myList)
+    #myList = readToList("Military_Alphabet.txt")
+    myList = readToList("lowerwords.txt")
+    #print(myList)
     #filterList(Regex expression here, myList)
     regExpressions(myList)
     
@@ -72,8 +73,10 @@ def listComps():
 
 #filters the list based on the regex entered using the list
 def filterList(regEx, strList):
-    afterFilter = [x for x in strList if re.compile(regEx)]
-    print(afterFilter)
+    afterFilter = [x for x in strList if re.search(regEx, x)]
+    #Alternate could be:
+    #afterFilter = [x for x in strList if re.regEx ,x)]
+    #print(afterFilter)
     return afterFilter
   
 
@@ -95,13 +98,14 @@ def readToList(file):
     return wordList
 
 def regExpressions(listName):
-    #Regular expressions 
-#    ans1 = re.compile("a$").search(listName)
-#    print(ans1)
-#    regAnswer1 = filterList(r'*a$', listName)
-#    print(regAnswer1)
-    for word in listName:
-        print(re.match(r'*a$', word))
+    #Return/print out the actual number, not the list of stuff 
+    reg1 = re.compile("a$")
+    list1 = filterList(reg1, listName)
+    print("Answer 1:", len(list1))
+    
+    reg2 = re.compile("[*{4}]d$", re.M)
+    list2 = filterList(reg2, listName)
+    print("Answer 2:", list2)
 
     
 main()
